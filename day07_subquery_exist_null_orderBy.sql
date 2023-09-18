@@ -1,3 +1,4 @@
+use sys;
 /* ======================== EXISTS CONDITION ===========================
 EXISTS Condition subquery'ler ile kullanilir. IN ifadesinin kullanimina
 benzer olarak, EXISTS ve NOT EXISTS ifadeleri de alt sorgudan getirilen 
@@ -105,6 +106,98 @@ where isim is null;
 -- Ismi null olan kayitlari silin :
 delete from insanlar
 where isim  is null;
+
+/* ======================== ORDER BY ===========================
+=> ORDER BY komutu belli bir field'a gore NATURAL ORDER olarak siralama
+yapmak icin kullanilir.
+=> ORDER BY komutu sadece SELECT komutu ile kullanilir.
+=> ORDER BY komutuna ozel olarak, siralama yapacagimiz field ismi yerine 
+field sirasini da yazabiliriz.
+=> Kayitlari natural order'a gore siralamak icin sorgunun sonuna 
+ ORDER BY (field_name) yazmak yeterlidir.
+=> Kayitlari ters siralama ile yazdirmak isterseniz DESC yaziyoruz.
+=> Ayni degerde olan kayitlari, tablodaki kayit sirasina gore getirir.
+==============================================================*/
+
+CREATE TABLE insanciklar
+(
+ssn char(9),
+isim varchar(50),
+soyisim varchar(50),
+adres varchar(50)
+);
+
+INSERT INTO insanciklar VALUES(123456789, 'Ali','Can', 'Istanbul');
+INSERT INTO insanciklar VALUES(234567890, 'Veli','Cem', 'Ankara');
+INSERT INTO insanciklar VALUES(345678901, 'Mine','Bulut', 'Ankara');
+INSERT INTO insanciklar VALUES(256789012, 'Mahmut','Bulut', 'Istanbul');
+INSERT INTO insanciklar VALUES (344678901, 'Mine','Yasa', 'Ankara');
+INSERT INTO insanciklar VALUES (345678901, 'Ali','Yilmaz', 'Istanbul');
+
+SELECT * FROM insanciklar;
+
+
+-- Soru 1: Insanciklar tablosundaki datalari adres'e gore siralayin :
+
+select * 
+from insanciklar
+order by adres;
+
+-- Soru 2: Isim' i Mine olanlari soyisim sirali olarak listeleyen Query yaziniz.
+
+SELECT *
+FROM insanciklar
+WHERE isim = 'Mine'
+ORDER BY soyisim;
+
+
+-- Soru 3: Insanciklar tablosundaki soyismi BULUT olanlari isim sirali olarak listeleyin.
+SELECT * 
+FROM insanciklar
+WHERE soyisim = 'Bulut'
+ORDER BY isim;
+
+-- Soru 4: Insanciklar tablosundaki tum kayitlari SSN numarasi buyukten kucuge olarak siralayin.
+SELECT *
+FROM insanciklar
+ORDER BY ssn DESC;
+
+-- Soru 5: Insanciklar tablosundaki tum kayitlari SSN numarasina gore siralayin.
+SELECT *
+FROM insanciklar
+ORDER BY ssn;
+
+-- Soru 6: Insanciklar tablosundaki tum kayitlari Soyisimler ters sirali, 
+-- isimler Natural sirali olarak listeleyin.
+SELECT *
+FROM insanciklar
+ORDER BY soyisim DESC,isim ASC;
+
+
+-- Soru 7: Insanciklar tablosundaki tum kayitlari adresler ters sirali, 
+-- isimler ters sirali olarak listeleyin
+
+SELECT *
+FROM insanciklar
+ORDER BY adres DESC,isim DESC;
+
+-- Soru 8: Insanciklar tablosundaki tum kayitlari adresler ters sirali, 
+-- isimler ters sirali, soyisimler ters sirali olarak listeleyin.
+
+SELECT *
+FROM insanciklar
+ORDER BY adres DESC,isim DESC,soyisim DESC;
+
+
+
+
+
+
+
+
+
+
+
 
 
                   
